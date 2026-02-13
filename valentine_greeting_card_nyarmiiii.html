@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nyarmiiii's Valentine</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #ffb6c1, #ff69b4, #ffc0cb);
+}
+
+h1 { font-family: 'Great Vibes', cursive; font-size: 3rem; margin-top: 40px; color: #fff; text-shadow: 2px 2px 5px #ff2e63; }
+button {
+  padding: 15px 30px;
+  margin: 10px;
+  border: none;
+  border-radius: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+button:hover { transform: scale(1.2) rotate(-2deg); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+#yesBtn { background-color: #ff69b4; animation: pulse 1.5s infinite; transform-origin: center; }
+#noBtn { background-color: #ff1493; animation: shake 0.5s; }
+@keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.1);} 100% {transform: scale(1);} }
+@keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
+#messageBox { margin-top: 30px; font-size: 1.5rem; min-height: 50px; font-family: 'Great Vibes', cursive; text-shadow: 2px 2px 5px #fff; color: #ff1493; transition: all 0.3s ease; }
+#greetingCard { display: none; padding: 20px; }
+#envelopeContainer { position: relative; width: 350px; margin: 20px auto; cursor: pointer; perspective: 800px; }
+#envelopeFront { background: #ff69b4; color: white; padding: 25px; border-radius: 15px; font-size: 22px; font-family: 'Great Vibes', cursive; transition: transform 0.6s ease; transform-style: preserve-3d; box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+#letter { display: none; background: #fff0f5; padding: 25px; border-radius: 15px; font-family: 'Great Vibes', cursive; font-size: 1.2rem; margin-top: 10px; color: #ff2e63; text-align: left; white-space: pre-wrap; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.heart { position: fixed; font-size: 20px; animation: fall linear infinite; }
+@keyframes fall { to { transform: translateY(100vh); opacity: 0; } }
+</style>
+</head>
+<body>
+
+<h1>For Nyarmiiii 💖</h1>
+<div id="questionPage">
+  <h2>Will you be my Valentine? 💌</h2>
+  <button id="yesBtn">Yes 💗</button>
+  <button id="noBtn">No 🙄</button>
+  <div id="messageBox"></div>
+</div>
+
+<div id="greetingCard">
+  <h2>Happy Valentine's Day 💕</h2>
+  <div id="envelopeContainer">
+    <div id="envelopeFront">Click to Open 💌</div>
+    <div id="letter">Happy Valentine’s Day, my love 💗💜
+My dear mamii we been doing this for over a year now. Even with all the distance between us, you’ve become such an important part of my everyday life. You’re the first person I want to tell things to, the one who makes my bad days better, and the reason I smile at my phone like an idiot sometimes hahahahaha 
+You’ve shown me so much love, patience, and understanding. Thank you for staying, for trusting me, for laughing with me, for supporting me, and for loving me the way you do. I don’t say it enough, but I’m reallyreallyyh grateful for you.
+I lovee u sooooo muchhhhh</div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+  const messageBox = document.getElementById('messageBox');
+  const questionPage = document.getElementById('questionPage');
+  const greetingCard = document.getElementById('greetingCard');
+  const envelopeFront = document.getElementById('envelopeFront');
+  const letter = document.getElementById('letter');
+
+  let yesScale = 1;
+  let noClickCount = 0;
+  const noMessages = [
+    "Don't, please say yes! 😢",
+    "I will be sad if you click no...",
+    "Come on, say yes 💗",
+    "Please, just a yes 🙏",
+    "No no no, I need a yes 💕"
+  ];
+
+  function createHearts(){
+    for(let i=0;i<40;i++){
+      let heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerText = '❤️';
+      heart.style.left = Math.random()*100+'vw';
+      heart.style.top = Math.random()*-20+'vh';
+      heart.style.fontSize = (Math.random()*20+10)+'px';
+      heart.style.animationDuration = (Math.random()*3+2)+'s';
+      document.body.appendChild(heart);
+    }
+  }
+
+  noBtn.addEventListener('click', function(){
+    const msg = noMessages[Math.floor(Math.random() * noMessages.length)];
+    messageBox.innerText = msg;
+    messageBox.style.fontSize = `${1.5 + noClickCount*0.1}rem`;
+    messageBox.style.color = '#ff1493';
+    yesScale += 0.2;
+    yesBtn.style.transform = `scale(${yesScale})`;
+    noClickCount++;
+  });
+
+  yesBtn.addEventListener('click', function(){
+    questionPage.style.display = 'none';
+    greetingCard.style.display = 'block';
+    createHearts();
+  });
+
+  envelopeFront.addEventListener('click', function(){
+    envelopeFront.style.transform = 'rotateX(180deg)';
+    setTimeout(()=>{
+      letter.style.display='block';
+      letter.style.opacity=0;
+      let op = 0;
+      const fadeIn = setInterval(()=>{
+        op += 0.02;
+        letter.style.opacity = op;
+        if(op>=1) clearInterval(fadeIn);
+      }, 20);
+    }, 300);
+  });
+
+});
+</script>
+
+</body>
+</html>
